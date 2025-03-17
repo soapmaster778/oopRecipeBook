@@ -9,8 +9,6 @@ private:
     int prepTime;
 
 public:
-    Recipe();
-
     Recipe(std::string newTitle="None", int newPrepTime=0);
 
 
