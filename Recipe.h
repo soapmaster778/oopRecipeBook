@@ -9,12 +9,18 @@ private:
     int prepTime;
 
 public:
-    Recipe(std::string newTitle="None", int newPrepTime=0);
+    Recipe(std::string newTitle = "None", int newPrepTime = 0);
+    Recipe(const Recipe& other);
 
+    Recipe(Recipe&& other)noexcept;
 
     ~Recipe();
 
     void display() const;
+
+
+    Recipe& operator++();    // Префіксний ++
+    Recipe operator+(const Recipe& other) const;
 };
 
 #endif // RECIPE_H
