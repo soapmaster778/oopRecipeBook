@@ -17,6 +17,8 @@ public:
     Ingredient(std::string newName, double newQuantity, std::string newUnit);
     ~Ingredient();
 
+    Ingredient(const Ingredient& other);
+
     void display() const;
 
     static int getTotalIngredients();

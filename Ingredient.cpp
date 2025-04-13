@@ -21,8 +21,13 @@ Ingredient::Ingredient(std::string newName, double newQuantity, std::string newU
 
 Ingredient::~Ingredient() {
     --totalIngredients;
-    std::cout << "Destroying ingredient: " << name << std::endl;
 }
+
+Ingredient::Ingredient(const Ingredient& other)
+    : name(other.name), quantity(other.quantity), unit(other.unit) {
+    ++totalIngredients;
+}
+
 
 void Ingredient::display() const {
     std::cout << "Ingredient: " << name << ", Quantity: "
