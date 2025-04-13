@@ -1,25 +1,33 @@
 #ifndef RECIPE_H
 #define RECIPE_H
-
+#include "CookbookItem.h"
+#include"Ingredient.h"
 #include <string>
+#include <vector>
 
-class Recipe {
-private:
-    std::string title;
+class Recipe: public CookbookItem{
+protected:
+    std::vector<Ingredient> ingredients;
     int prepTime;
 
 public:
-    Recipe(std::string newTitle = "None", int newPrepTime = 0);
+    Recipe(const std::string& name = "None",
+          int prepTime = 0,
+          const std::string& description = "No description");
+
     Recipe(const Recipe& other);
-
-    Recipe(Recipe&& other)noexcept;
-
+    Recipe(Recipe&& other) noexcept;
     ~Recipe();
 
-    void display() const;
+    Recipe& operator=(const Recipe& other);
 
+    void setPrepTime(int time);
+    int getPrepTime() const;
+    void addIngredient(const Ingredient& ingredient);
 
-    Recipe& operator++();    // Префіксний ++
+    void displayRecipe() const;
+
+    Recipe& operator++();
     Recipe operator+(const Recipe& other) const;
 };
 

@@ -1,30 +1,56 @@
 #include "Recipe.h"
 #include <iostream>
 
-Recipe::Recipe(std::string newTitle, int newPrepTime)
-    : title{newTitle}, prepTime{newPrepTime} {}
+Recipe::Recipe(const std::string& name, int prepTime, const std::string& description)
+    : CookbookItem(name, description), prepTime(prepTime) {
+    std::cout << "Constructor recipe: " << name << std::endl;
+}
 
 Recipe::Recipe(const Recipe& other)
-    : title{other.title}, prepTime{other.prepTime} {
-    std::cout << "Copy constructor was called for recipe: " << title << std::endl;
+    : CookbookItem(other), prepTime(other.prepTime), ingredients(other.ingredients) {
+    std::cout << "Recipe copy constructor for: " << name << std::endl;
 }
 
 Recipe::Recipe(Recipe&& other) noexcept
-    : title{std::move(other.title)}, prepTime{other.prepTime} {
+    : CookbookItem(std::move(other.name), std::move(other.description)),
+      prepTime(other.prepTime), ingredients(std::move(other.ingredients)) {
     other.prepTime = 0;
-    std::cout << "Moving recipe: " << title << std::endl;
+    std::cout << "Recipe move constructor for: " << name << std::endl;
 }
 
 Recipe::~Recipe() {
-    std::cout << "Destroying recipe: " << title << std::endl;
+    std::cout << "Destructor recipe: " << name << std::endl;
 }
 
-void Recipe::display() const {
-    //  title="Fried potato";
-    std::cout << "Recipe: " << title << ", Preparation Time: "
-              << prepTime << " minutes" << std::endl;
+Recipe& Recipe::operator=(const Recipe& other) {
+    if (this != &other) {
+        CookbookItem::operator=(other);
+        prepTime = other.prepTime;
+        ingredients = other.ingredients;
+    }
+    return *this;
 }
 
+void Recipe::setPrepTime(int time) {
+    prepTime = time;
+}
+
+int Recipe::getPrepTime() const {
+    return prepTime;
+}
+
+void Recipe::addIngredient(const Ingredient& ingredient) {
+    ingredients.push_back(ingredient);
+}
+
+void Recipe::displayRecipe() const {
+    CookbookItem::display();
+    std::cout << "Preparation time: " << prepTime << " minutes\n";
+    std::cout << "Ingredients:\n";
+    for (const Ingredient& ingredient : ingredients) {
+        ingredient.display();
+    }
+}
 
 Recipe& Recipe::operator++() {
     ++prepTime;
@@ -32,5 +58,10 @@ Recipe& Recipe::operator++() {
 }
 
 Recipe Recipe::operator+(const Recipe& other) const {
-    return Recipe{title + " & " + other.title, prepTime + other.prepTime};
+    Recipe result(name + " & " + other.name, prepTime + other.prepTime);
+    result.ingredients = ingredients;
+    result.ingredients.insert(result.ingredients.end(),
+                            other.ingredients.begin(),
+                            other.ingredients.end());
+    return result;
 }
