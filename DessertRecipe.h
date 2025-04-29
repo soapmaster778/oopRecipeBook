@@ -4,20 +4,15 @@
 #include "Recipe.h"
 
 class DessertRecipe : public Recipe {
-private:
-    double sweetnessLevel;
-    
+    bool sweet;
+
 public:
-    DessertRecipe(const std::string& name = "None", 
-                 int prepTime = 0, 
-                 double sweetness = 0.5,
-                 const std::string& description = "No description");
-    ~DessertRecipe();
-    
-    void setSweetness(double level);
-    double getSweetness() const;
-    
-    void displayDessert() const;
+    DessertRecipe(const std::string& name, int prepTime, bool sweet);
+    void print() const override;
+    std::string getType() const override;
+    virtual bool isSweet() const final;
+
+    ~DessertRecipe() override;
 };
 
-#endif // DESSERTRECIPE_H
+#endif

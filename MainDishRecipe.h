@@ -4,24 +4,15 @@
 #include "Recipe.h"
 
 class MainDishRecipe : public Recipe {
-private:
-    bool isVegetarian;
-    
-public:
-    MainDishRecipe(const std::string& name = "None", 
-                  int prepTime = 0, 
-                  bool vegetarian = false,
-                  const std::string& description = "No description");
-    ~MainDishRecipe();
+    bool vegetarian;
 
-    MainDishRecipe(const MainDishRecipe& other);
-    MainDishRecipe(MainDishRecipe&& other) noexcept;
-    MainDishRecipe& operator=(const MainDishRecipe& other);
-    
-    void setVegetarian(bool vegetarian);
-    bool getVegetarian() const;
-    
-    void displayMainDish() const;
+public:
+    MainDishRecipe(const std::string& name, int prepTime, bool vegetarian);
+    void print() const override;
+    std::string getType() const override;
+    bool isVegetarian() const;
+
+    ~MainDishRecipe() override;
 };
 
-#endif // MAINDISHRECIPE_H
+#endif

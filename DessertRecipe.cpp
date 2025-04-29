@@ -1,25 +1,20 @@
 #include "DessertRecipe.h"
 #include <iostream>
 
-DessertRecipe::DessertRecipe(const std::string& name, int prepTime, 
-                            double sweetness, const std::string& description)
-    : Recipe(name, prepTime, description), sweetnessLevel(sweetness) {
-    std::cout << "DessertRecipe constructor: " << name << std::endl;
+DessertRecipe::DessertRecipe(const std::string& name, int prepTime, bool sweet)
+    : Recipe(name, prepTime), sweet(sweet) {}
+
+void DessertRecipe::print() const {
+    Recipe::print();
+    std::cout<< " mins, Sweet: " << (sweet ? "Yes" : "No") << "\n";
 }
 
-void DessertRecipe::setSweetness(double level) {
-    sweetnessLevel = level;
+std::string DessertRecipe::getType() const {
+    return "Dessert";
 }
 
-double DessertRecipe::getSweetness() const {
-    return sweetnessLevel;
+bool DessertRecipe::isSweet() const {
+    return sweet;
 }
 
-void DessertRecipe::displayDessert() const {
-    displayRecipe();
-    std::cout << "Sweetness level: " << sweetnessLevel << "/1.0" << std::endl;
-}
-
-DessertRecipe::~DessertRecipe() {
-    std::cout << "Destroying DessertRecipe: " << getName()<< std::endl;
-}
+DessertRecipe::~DessertRecipe()= default;
