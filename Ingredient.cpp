@@ -1,39 +1,20 @@
 #include "Ingredient.h"
-#include <iostream>
 
+Ingredient::Ingredient(const std::string& name, double quantity, const std::string& unit)
+    : name(name), quantity(quantity), unit(unit) {}
 
-int Ingredient::totalIngredients = 0;
-
-Ingredient::Ingredient() : name{"None"}, quantity{0.0}, unit{"None"} {
-    ++totalIngredients;
+std::string Ingredient::toString() const {
+    return name + " - " + std::to_string(quantity) + " " + unit;
 }
 
-Ingredient::Ingredient(std::string newName)
-    : Ingredient{newName, 0.0, "None"} {}
-
-Ingredient::Ingredient(std::string newName, double newQuantity)
-    : Ingredient{newName, newQuantity, "None"} {}
-
-Ingredient::Ingredient(std::string newName, double newQuantity, std::string newUnit)
-    : name{newName}, quantity{newQuantity}, unit{newUnit} {
-    ++totalIngredients;
+std::string Ingredient::getName() const {
+    return name;
 }
 
-Ingredient::~Ingredient() {
-    --totalIngredients;
+double Ingredient::getQuantity() const {
+    return quantity;
 }
 
-Ingredient::Ingredient(const Ingredient& other)
-    : name(other.name), quantity(other.quantity), unit(other.unit) {
-    ++totalIngredients;
-}
-
-
-void Ingredient::display() const {
-    std::cout << "Ingredient: " << name << ", Quantity: "
-              << quantity << " " << unit << std::endl;
-}
-
-int Ingredient::getTotalIngredients() {
-    return totalIngredients;
+std::string Ingredient::getUnit() const {
+    return unit;
 }
